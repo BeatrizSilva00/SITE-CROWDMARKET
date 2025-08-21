@@ -41,8 +41,78 @@
       font-size: 12px;
       color: #6c757d;
     }
+
+    .modal-google .modal-content {
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .modal-google .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-google .modal-body {
+      text-align: left;
+    }
+
+    .email-option {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .email-option:hover {
+      background-color: #f1f1f1;
+    }
+
   </style>
 </head>
+
+<div class="modal fade modal-google" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="emailModalLabel">Escolha uma conta</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="email-option">
+          <img src="https://img.icons8.com/ios-filled/24/000000/user.png"/>
+          sophia@email.com
+        </div>
+        <div class="email-option">
+          <img src="https://img.icons8.com/ios-filled/24/000000/user.png"/>
+          junior@email.com
+        </div>
+        
+        <hr>
+        
+        <form>
+          <label for="newEmail" class="form-label">Outro</label>
+          <input type="email" class="form-control" id="newEmail" placeholder="Digite seu e-mail">
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Continuar</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
 <body>
   
   <div class="header">
@@ -57,22 +127,25 @@
         Faça parte da nossa comunidade e economize mais em suas compras
       </p>
 
-      <button class="btn btn-light border btn-social">
+      <button class="btn btn-light border btn-social" data-bs-toggle="modal" data-bs-target="#emailModal">
         <img src="https://img.icons8.com/color/20/000000/google-logo.png"/> 
         Continuar com o Google
       </button>
 
-      <button class="btn btn-light border btn-social">
+      <button class="btn btn-light border btn-social" data-bs-toggle="modal" data-bs-target="#emailModal">
         <img src="https://img.icons8.com/color/20/000000/facebook.png"/> 
-        Continuar com o Face
+        Continuar com o Facebook
       </button>
 
       <div class="text-center my-2">Ou</div>
 
-      <button class="btn btn-light border btn-social">
+      <button class="btn btn-light border btn-social" data-bs-toggle="modal" data-bs-target="#emailModal">
         <img src="https://img.icons8.com/ios-glyphs/20/000000/new-post.png"/> 
-        Continuar com e-mail
+        Continuar com o E-mail
       </button>
+
+      
+
 
       <div class="text-center mt-3">
         Já possui uma conta? <a href="login.html">Faça login</a>
