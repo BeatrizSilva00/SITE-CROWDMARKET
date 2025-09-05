@@ -83,33 +83,144 @@
       </div>
       
       <div class="modal-body">
-        <div class="email-option">
-          <img src="https://img.icons8.com/ios-filled/24/000000/user.png"/>
-          sophia@email.com
-        </div>
-        <div class="email-option">
-          <img src="https://img.icons8.com/ios-filled/24/000000/user.png"/>
-          junior@email.com
-        </div>
-        
-        <hr>
-        
-        <form>
+        <form id="emailForm">
+          <label class="email-option">
+            <input type="radio" name="emailChoice" value="sophia@email.com" class="form-check-input me-2">
+            <img src="https://img.icons8.com/ios-filled/24/000000/user.png"/>
+            sophia@email.com
+          </label>
+
+          <label class="email-option">
+            <input type="radio" name="emailChoice" value="junior@email.com" class="form-check-input me-2">
+            <img src="https://img.icons8.com/ios-filled/24/000000/user.png"/>
+            junior@email.com
+          </label>
+
+          <hr>
+
           <label for="newEmail" class="form-label">Outro</label>
           <input type="email" class="form-control" id="newEmail" placeholder="Digite seu e-mail">
         </form>
       </div>
+
       
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Continuar</button>
+        <button type="button" class="btn btn-primary" id="continueBtn">Continuar</button>
       </div>
       
     </div>
   </div>
 </div>
 
+
+<div class="modal fade modal-google" id="passwordModal" tabindex="-1" aria-labelledby="passwordModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title" id="passwordModalLabel">Digite sua senha</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="passwordForm">
+          <label for="userPassword" class="form-label">Senha</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="userPassword" placeholder="Digite sua senha" required>
+            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+              👁
+            </button>
+          </div>
+          <small id="passwordStrength" class="form-text"></small>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary" form="passwordForm">Entrar</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.getElementById("continueBtn").addEventListener("click", function() {
+    const selectedEmail = document.querySelector('input[name="emailChoice"]:checked');
+    const newEmail = document.getElementById("newEmail").value;
+
+    let chosenEmail = "";
+
+    if (selectedEmail) {
+      chosenEmail = selectedEmail.value;
+    } else if (newEmail) {
+      chosenEmail = newEmail;
+    }
+
+    if (!chosenEmail) {
+      alert("Por favor, selecione ou digite um e-mail.");
+      return;
+    }
+
+    const emailModal = bootstrap.Modal.getInstance(document.getElementById('emailModal'));
+    emailModal.hide();
+
+    const passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
+    passwordModal.show();
+  });
+
+
+  //mostrar e ocultar senha
+  document.getElementById("togglePassword").addEventListener("click", function () {
+    const passwordInput = document.getElementById("userPassword");
+    const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    this.textContent = type === "password" ? "👁" : "🙈";
+  });
+
+  //forca
+  const passwordInput = document.getElementById("userPassword");
+  const strengthText = document.getElementById("passwordStrength");
+  const form = document.getElementById("passwordForm");
+
+  passwordInput.addEventListener("input", function() {
+    const value = passwordInput.value;
+    let strength = "";
+    let color = "red";
+
+    if (value.length < 6) {
+      strength = "Senha muito curta (mínimo 6 caracteres)";
+      color = "red";
+    } else if (/^[a-zA-Z]+$/.test(value)) {
+      strength = "Senha fraca (use números e símbolos)";
+      color = "orange";
+    } else if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(value)) {
+      strength = "Senha forte";
+      color = "green";
+    } else {
+      strength = "Senha média (adicione letras maiúsculas e números)";
+      color = "blue";
+    }
+
+    strengthText.textContent = strength;
+    strengthText.style.color = color;
+  });
+
+  //impede envio
+  form.addEventListener("submit", function(e) {
+    if (passwordInput.value.length < 6) {
+      e.preventDefault();
+      alert("A senha deve ter pelo menos 6 caracteres.");
+    }
+  });
+</script>
+
 
 <body>
   
